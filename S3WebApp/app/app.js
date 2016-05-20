@@ -1,3 +1,2 @@
 
-var myApp = angular.module('chatApp', ['ngResource']);
-
+var myApp = angular.module('chatApp', ['ngResource', 'ngGeolocation']);

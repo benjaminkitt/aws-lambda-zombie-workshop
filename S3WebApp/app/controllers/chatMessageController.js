@@ -1,4 +1,4 @@
-myApp.controller('chatMessageCtrl', ['$scope', '$rootScope', '$resource', function($scope, $rootScope, $resource) {
+myApp.controller('chatMessageCtrl', ['$scope', '$rootScope', '$resource', '$geolocation', function($scope, $rootScope, $resource, $geolocation) {
 
   $rootScope.$on("chatting", function() {
     document.getElementById('chat-message-input').placeholder = "Enter a message and save humanity";
@@ -6,6 +6,11 @@ myApp.controller('chatMessageCtrl', ['$scope', '$rootScope', '$resource', functi
   $rootScope.$on("not chatting", function() {
     document.getElementById('chat-message-input').value = null;
     document.getElementById('chat-message-input').placeholder = "Save your brains, enter your user name";
+  });
+  $geolocation.watchPosition({
+      timeout: 60000,
+      maximumAge: 250,
+      enableHighAccuracy: true
   });
 
   $scope.lastTalking = new Date;
@@ -38,7 +43,8 @@ myApp.controller('chatMessageCtrl', ['$scope', '$rootScope', '$resource', functi
 
       var message = {
         channel: 'default',
-        name: document.getElementById('name-input').value
+        name: document.getElementById('name-input').value,
+        location: $geolocation.position.error ? null : $geolocation.position.coords
       };
 
       console.log('Posting to talkers.');
