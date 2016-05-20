@@ -23,7 +23,9 @@ myApp.controller('chatMessageCtrl', ['$scope', '$rootScope', '$resource', '$geol
       var message = {
         channel: 'default',
         name: document.getElementById('name-input').value,
-        message: $scope.chatMessage
+        message: $scope.chatMessage,
+        latitude: $geolocation.position.coords.latitude || null,
+        longitude: $geolocation.position.coords.longitude || null,
       };
 
       PostMessages.save(message, function() {
@@ -43,8 +45,7 @@ myApp.controller('chatMessageCtrl', ['$scope', '$rootScope', '$resource', '$geol
 
       var message = {
         channel: 'default',
-        name: document.getElementById('name-input').value,
-        location: $geolocation.position.error ? null : $geolocation.position.coords
+        name: document.getElementById('name-input').value
       };
 
       console.log('Posting to talkers.');
